@@ -1,0 +1,19 @@
+.sign-up-wrapper{
+  display:flex;
+  justify-content: center;
+}
+.sign-up-wrapper  .sign-up-sub-wrapper{
+  padding-top:10%;
+  width:80%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+}
+.sign-up-sub-wrapper form{
+  width:100%;
+  text-align:center;
+}
+.code-form{
+  padding-top:40%;
+}

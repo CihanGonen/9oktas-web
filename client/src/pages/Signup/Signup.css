@@ -1,0 +1,14 @@
+.sign-up-container{
+  display:flex;
+  height:100vh;
+}
+.sign-up-left{
+  flex:1;
+  height:100%;
+  background:url('../../assets/leftSide.png'),linear-gradient(to bottom right,#00cdfe,#027ff7);
+  border-radius:0 5% 5% 0;
+}
+.sign-up-right{
+  flex:1;
+  height:100%;
+}

@@ -1,0 +1,39 @@
+.sign-in-wrapper{
+  display:flex;
+  justify-content: center;
+}
+.sign-in-wrapper  .sign-in-sub-wrapper{
+  padding-top:20%;
+  width:80%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: center;
+}
+.sign-in-sub-wrapper form{
+  width:100%;
+  text-align:center;
+}
+.sign-in-sub-wrapper .forgotPassword{
+  padding-top:2%;
+  font-size:16px;
+}
+.sign-in-sub-wrapper .forgotPassword:hover{
+  text-decoration:underline;
+}
+.code-form{
+  padding-top:40%;
+}
+.forgot-password{
+  margin-top: 5%;
+  font-size: 16px;
+  color:#404040;
+  text-decoration: underline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.forgot-password:hover{
+  transition:0.2s ease;
+  color:black;
+}

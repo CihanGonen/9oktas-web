@@ -1,0 +1,33 @@
+*{
+  outline:none;
+  box-sizing: border-box;
+}
+html, body, #root {
+  height: 100%;
+}
+body {
+  /* buraya font gelecek */
+  font-family:'Century Gothic' ,sans-serif;
+  margin: 0;
+  font-size: 1.4em;
+  background: #dfdfdf;
+  color: #404040;
+}
+h1,h2,h3,p {
+  margin: 0;
+  letter-spacing: 0.1rem;
+}
+a{
+  text-decoration:none;
+  color:#404040;
+}
+.cizgi{
+  height:5px;
+  border-radius:10px;
+  margin-top:2%;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  appearance: none;
+  opacity: 1;
+}
