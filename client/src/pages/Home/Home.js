@@ -8,7 +8,7 @@ export default function Home() {
     <div>
       <Navbar />
       <div style={{ textAlign: "center" }}>
-        {user ? <div> Welcome {user.displayName} </div> : <div>Homepage </div>}
+        {user ? <div> Welcome {user.displayName} </div> : <div>Homepage</div>}
       </div>
     </div>
   );
