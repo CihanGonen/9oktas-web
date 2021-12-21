@@ -1,6 +1,7 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth'
-import 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDW5dgG0rlAjI5Z1m8Uonwe0CMg7Ry3iEM",
@@ -8,13 +9,13 @@ const firebaseConfig = {
   projectId: "oktas-web",
   storageBucket: "oktas-web.appspot.com",
   messagingSenderId: "872137674944",
-  appId: "1:872137674944:web:ef8504e26a3a44b4229d25"
+  appId: "1:872137674944:web:ef8504e26a3a44b4229d25",
 };
 
 // init firabase
 initializeApp(firebaseConfig);
 
 // init services
-const auth = getAuth()
-const storage = firebase.storage();
-export { auth, storage, firebase as default};
+const auth = getAuth();
+const storage = getStorage();
+export { auth, storage };

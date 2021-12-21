@@ -30,6 +30,9 @@ export const useSignup = () => {
       navigate("/signin");
     } else {
       setError("Wrong Code");
+      auth.currentUser.delete().then(() => {
+        console.log("user deleted");
+      });
       setIsSent(false);
       navigate("/signin");
     }
@@ -46,7 +49,6 @@ export const useSignup = () => {
       if (res.user) {
         setResUser(res.user);
         generateAndSendCode(email);
-
         setIsSent(true);
       } else {
         throw new Error("Could not complete signup");
