@@ -43,7 +43,7 @@ export default function SigninSignupRight() {
     e.preventDefault();
 
     if (password !== secondPassword) {
-      setError("Lütfen girilen şifrelerin aynı olmasına dikkat ediniz.");
+      setError("Şifreler uyuşmuyor!");
       return;
     }
 
@@ -126,9 +126,9 @@ export default function SigninSignupRight() {
             {error && (
               <p style={{ marginTop: "1rem", color: "red", fontSize: "16px" }}>
                 {error.includes("password")
-                  ? "şifre en az altı haneli olmalıdır."
+                  ? "şifre en az 6 haneli olmalıdır!"
                   : error.includes("mail")
-                  ? "email kullanımdadır"
+                  ? "email kullanılmaktadır!"
                   : error}
               </p>
             )}

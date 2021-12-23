@@ -3,7 +3,7 @@ import { storage } from "../../firebase/config";
 
 import Navbar from "../../components/Navbar/Navbar";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
+import ProgressBar from "@ramonak/react-progress-bar";
 import {
   ref,
   listAll,
@@ -46,13 +46,9 @@ export default function Home() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("transfered", snapshot.bytesTransferred);
-        console.log("total", snapshot.totalBytes);
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-
-        console.log(prog);
         setProgress(prog);
       },
       (err) => console.log(err.message),
@@ -99,10 +95,18 @@ export default function Home() {
     listAll(listRef).then((res) => {
       res.prefixes.forEach((folderRef) => {
         setFolders((prevFolders) => {
-          return [
-            ...prevFolders,
-            folderRef._location.path_.substring(user.uid.length + 1),
-          ];
+          if (
+            prevFolders.includes(
+              folderRef._location.path_.substring(user.uid.length + 1)
+            )
+          ) {
+            return [...prevFolders];
+          } else {
+            return [
+              ...prevFolders,
+              folderRef._location.path_.substring(user.uid.length + 1),
+            ];
+          }
         });
       });
       setGettingFolders(false);
@@ -171,7 +175,16 @@ export default function Home() {
                 <button type="submit">Upload</button>
               </form>
 
-              <h3 style={{ marginTop: "1rem" }}>Uploaded {progress}%</h3>
+              <div
+                style={{
+                  marginTop: "20px",
+                  width: "50%",
+                  border: "1px solid #0186f7",
+                  borderRadius: "20px",
+                }}
+              >
+                <ProgressBar completed={progress} />
+              </div>
               {uploadError && <p style={{ color: "red" }}>{uploadError}</p>}
             </div>
             <div className="home-right">

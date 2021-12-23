@@ -8,7 +8,7 @@ export const useVerifCode = () => {
   const generateAndSendCode = async (to) => {
     let code = Math.floor(100000 + Math.random() * 900000);
     try {
-      await axios.post("http://localhost:3005/sendVerifEmail", { code, to });
+      await axios.post("http://localhost:3001/sendVerifEmail", { code, to });
       setIsSent(true);
       setSentCode(String(code));
     } catch (err) {
