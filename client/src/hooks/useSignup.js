@@ -4,7 +4,11 @@ import { useAuthContext } from "./useAuthContext";
 import { useVerifCode } from "./useVerifCode";
 
 import { auth } from "../firebase/config";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  deleteUser,
+  updateProfile,
+} from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
 
@@ -23,16 +27,18 @@ export const useSignup = () => {
     if (verifCode === sentCode) {
       setError(null);
       // add display name to user
-      await updateProfile(auth.currentUser, { displayName });
+      const { email, password } = resUser;
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      updateProfile(res.user, {
+        displayName,
+      });
 
       // dispatch login action
-      dispatch({ type: "LOGIN", payload: resUser });
+      dispatch({ type: "LOGIN", payload: res.user });
       navigate("/signin");
     } else {
       setError("Wrong Code");
-      auth.currentUser.delete().then(() => {
-        console.log("user deleted");
-      });
       setIsSent(false);
       navigate("/signin");
     }
@@ -43,16 +49,11 @@ export const useSignup = () => {
     setIsPending(true);
 
     try {
-      // signup
       const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      if (res.user) {
-        setResUser(res.user);
-        generateAndSendCode(email);
-        setIsSent(true);
-      } else {
-        throw new Error("Could not complete signup");
-      }
+      deleteUser(res.user);
+      setResUser({ email, password });
+      generateAndSendCode(email);
+      setIsSent(true);
 
       if (!isCancelled) {
         setIsPending(false);
@@ -70,5 +71,5 @@ export const useSignup = () => {
     return () => setIsCancelled(true);
   }, []);
 
-  return { checkCode, signup, isSent, isPending, error };
+  return { checkCode, signup, isSent, isPending, error, setError };
 };

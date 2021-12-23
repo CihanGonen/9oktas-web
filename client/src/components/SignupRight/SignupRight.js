@@ -11,11 +11,10 @@ export default function SigninSignupRight() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(null);
 
   const [verifCode, setVerifCode] = useState("");
 
-  const { checkCode, signup, isSent, isPending, error } = useSignup();
+  const { checkCode, signup, isSent, isPending, error, setError } = useSignup();
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -44,13 +43,9 @@ export default function SigninSignupRight() {
     e.preventDefault();
 
     if (password !== secondPassword) {
-      setPasswordError(
-        "Lütfen girilen şifrelerin aynı olmasına dikkat ediniz."
-      );
+      setError("Lütfen girilen şifrelerin aynı olmasına dikkat ediniz.");
       return;
     }
-
-    setPasswordError(null);
 
     signup(email, password);
   };
@@ -120,7 +115,6 @@ export default function SigninSignupRight() {
               label="Şifre tekrarı"
               required
             />
-            {passwordError && <p>{passwordError}</p>}
             {isPending ? (
               <CustomButton disabled type="submit">
                 yükleniyor...
@@ -129,7 +123,15 @@ export default function SigninSignupRight() {
               <CustomButton type="submit">KAYIT OL</CustomButton>
             )}
 
-            {error && <p>{error}</p>}
+            {error && (
+              <p style={{ marginTop: "1rem", color: "red", fontSize: "16px" }}>
+                {error.includes("password")
+                  ? "şifre en az altı haneli olmalıdır."
+                  : error.includes("mail")
+                  ? "email kullanımdadır"
+                  : error}
+              </p>
+            )}
           </form>
         </div>
       )}

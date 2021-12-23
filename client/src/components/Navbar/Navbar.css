@@ -1,15 +1,27 @@
-.navbar{
+.navbar {
   width: 100%;
-  padding: 30px;
-}
-.navbar ul{
+  height: 10vh;
   display: flex;
+}
+.navbar-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  background: linear-gradient(to bottom right, #00cdfe, #027ff7);
+  border-radius: 0 5% 5% 0;
+}
+.navbar ul {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  padding-right: 20px;
   margin: 0 auto;
   align-items: center;
   justify-content: flex-end;
   list-style: none;
 }
-.navbar a{
-  text-decoration:none;
-  margin-right:50px;
+.navbar a {
+  text-decoration: none;
+  margin-right: 50px;
 }

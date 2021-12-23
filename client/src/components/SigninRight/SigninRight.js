@@ -110,6 +110,7 @@ export default function SigninSignupRight() {
           <form onSubmit={handleSubmit}>
             <FormInput
               name="email"
+              type="email"
               value={email}
               handleChange={handleChange}
               label="Email"
@@ -130,7 +131,11 @@ export default function SigninSignupRight() {
             ) : (
               <CustomButton type="submit">GİRİŞ YAP</CustomButton>
             )}
-            {error && <p>{error}</p>}
+            {error && (
+              <p style={{ marginTop: "1rem", color: "red", fontSize: "16px" }}>
+                {error.includes("auth") ? "email veya şifre yanlış" : error}
+              </p>
+            )}
           </form>
           <button
             onClick={() => setIsForgetPass(true)}

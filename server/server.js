@@ -27,13 +27,16 @@ app.post("/sendVerifEmail", async (req, res) => {
     text: "Use this code to log in",
     html: `<h2>Use this code to log in</h2><p>${code}</p>`,
   };
-
-  transporter.sendMail(mailOptions, (err) => {
-    if (err) {
-      res.json({ status: "fail" });
-    }
-    res.json({ status: "success" });
-  });
+  try {
+    transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        res.json({ status: "fail" });
+      }
+      res.json({ status: "success" });
+    });
+  } catch (err) {
+    return err.message;
+  }
 });
 
 const PORT = process.env.PORT || 3001;

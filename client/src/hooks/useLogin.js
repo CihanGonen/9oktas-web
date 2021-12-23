@@ -18,10 +18,14 @@ export const useLogin = () => {
 
   let navigate = useNavigate();
 
-  const checkCode = (verifCode) => {
+  const checkCode = async (verifCode) => {
     if (verifCode === sentCode) {
       setError(null);
-      dispatch({ type: "LOGIN", payload: resUser });
+      const { email, password } = resUser;
+
+      const res = await signInWithEmailAndPassword(auth, email, password);
+
+      dispatch({ type: "LOGIN", payload: res.user });
       navigate("/");
     } else {
       setError("Wrong Code");
@@ -38,11 +42,9 @@ export const useLogin = () => {
       // login
       const res = await signInWithEmailAndPassword(auth, email, password);
 
-      if (res.user) {
-        setResUser(res.user);
-        generateAndSendCode(email);
-        setIsSent(true);
-      }
+      setResUser({ email, password });
+      generateAndSendCode(email);
+      setIsSent(true);
 
       if (!isCancelled) {
         setIsPending(false);
