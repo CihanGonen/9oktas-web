@@ -1,27 +1,54 @@
 .navbar {
-  width: 100%;
-  height: 10vh;
-  display: flex;
-}
-.navbar-left {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
+  width: 20%;
+  height: 100vh;
+  color: white;
+  text-align: left;
+  font-size: 18px;
   background: linear-gradient(to bottom right, #00cdfe, #027ff7);
   border-radius: 0 5% 5% 0;
+  padding: 2rem 2rem;
 }
-.navbar ul {
-  flex: 1;
+.route-links-wrapper {
+  padding-left: 1rem;
   display: flex;
-  padding: 0;
-  padding-right: 20px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: flex-end;
-  list-style: none;
+  flex-direction: column;
+  margin-top: 3.5rem;
+  font-weight: bolder;
 }
-.navbar a {
-  text-decoration: none;
-  margin-right: 50px;
+.route-links-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.route {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+}
+.help-links-wrapper {
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8.5rem;
+  font-weight: bolder;
+}
+.help-links-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cikis {
+  padding: 0;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: transparent;
+  cursor: pointer;
+}
+.logo-wrapper {
+  display: flex;
+  margin-top: 4rem;
+  justify-content: center;
 }

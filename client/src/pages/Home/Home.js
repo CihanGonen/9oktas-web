@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { storage } from "../../firebase/config";
 
 import Navbar from "../../components/Navbar/Navbar";
+import AddFile from "../../components/AddFile/AddFile";
+
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+
 import ProgressBar from "@ramonak/react-progress-bar";
 import {
   ref,
@@ -14,6 +18,8 @@ import {
 import "./Home.css";
 
 export default function Home() {
+  let navigate = useNavigate();
+
   const { user } = useAuthContext();
 
   const [files, setFiles] = useState([]);
@@ -62,31 +68,30 @@ export default function Home() {
   };
 
   const listFile = (fileName) => {
+    const urls = [];
     const listRef = ref(storage, fileName);
     listAll(listRef)
       .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-          console.log("folder-ref", folderRef);
-          //içeride klasör olsa bunu uygulardı
-        });
         res.items.forEach((itemRef) => {
           getDownloadURL(ref(storage, itemRef)).then((url) => {
-            console.log(url);
-            setFiles((prevFiles) => {
-              return [
-                ...prevFiles,
-                {
-                  name: itemRef._location.path_.substring(fileName.length + 1),
-                  downloadUrl: url,
-                },
-              ];
-            });
+            urls.push(url);
+            // setFiles((prevFiles) => {
+            //   return [
+            //     ...prevFiles,
+            //     {
+            //       name: itemRef._location.path_.substring(fileName.length + 1),
+            //       downloadUrl: url,
+            //     },
+            //   ];
+            // });
           });
         });
       })
       .catch((error) => {
         console.log(error.message);
       });
+
+    return urls;
   };
 
   const listFolders = () => {
@@ -95,18 +100,10 @@ export default function Home() {
     listAll(listRef).then((res) => {
       res.prefixes.forEach((folderRef) => {
         setFolders((prevFolders) => {
-          if (
-            prevFolders.includes(
-              folderRef._location.path_.substring(user.uid.length + 1)
-            )
-          ) {
-            return [...prevFolders];
-          } else {
-            return [
-              ...prevFolders,
-              folderRef._location.path_.substring(user.uid.length + 1),
-            ];
-          }
+          return [
+            ...prevFolders,
+            folderRef._location.path_.substring(user.uid.length + 1),
+          ];
         });
       });
       setGettingFolders(false);
@@ -121,15 +118,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    listFolders();
+    if (user) {
+      listFolders();
+      listFile();
+    } else {
+      navigate("signin");
+    }
   }, []);
 
   return (
     <div>
-      <Navbar />
       <div className="home-container" style={{ textAlign: "center" }}>
-        {user ? (
+        {user && (
           <>
+            <Navbar />
             <div className="home-left">
               <h3>Dosya Yükle</h3>
               <div className="folders-wrapper">
@@ -187,7 +189,7 @@ export default function Home() {
               </div>
               {uploadError && <p style={{ color: "red" }}>{uploadError}</p>}
             </div>
-            <div className="home-right">
+            {/* <div className="home-right">
               <h2>Dosyalar</h2>
               {files.map((file) => (
                 <div style={{ marginTop: "2rem" }} key={file.downloadUrl}>
@@ -197,15 +199,13 @@ export default function Home() {
                   </a>
                 </div>
               ))}
-            </div>
+            </div> */}
+            <AddFile
+              folders={folders}
+              gettingFolders={gettingFolders}
+              listFile={listFile}
+            />
           </>
-        ) : (
-          <div>
-            <h2>HomePage</h2>
-            <h3 style={{ marginTop: "2rem" }}>
-              You need to sign in, in order to upload files
-            </h3>
-          </div>
         )}
       </div>
     </div>
